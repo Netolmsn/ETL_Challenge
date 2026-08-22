@@ -31,7 +31,7 @@ public class Cliente
     public void SetEmail(string email)
     {
         var emailTratado = email?.Trim();
-        if (string.IsNullOrWhiteSpace(emailTratado))
+        if (string.IsNullOrWhiteSpace(emailTratado) || !ValidarEmail(emailTratado))
         {
             throw new ArgumentException("O email é inválido: {email}.");
         }
