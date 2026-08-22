@@ -2,7 +2,6 @@ namespace Wooba.Etl.Console.Infrastructure.Csv;
 
 using System.Globalization;
 using System.IO;
-using Wooba.Etl.Console.Domain.Interfaces;
 using Wooba.Etl.Domain.Interfaces;
 
 public class CsvReader : IClienteReader

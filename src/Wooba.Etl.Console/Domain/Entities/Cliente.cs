@@ -33,7 +33,7 @@ public class Cliente
         var emailTratado = email?.Trim();
         if (string.IsNullOrWhiteSpace(emailTratado) || !ValidarEmail(emailTratado))
         {
-            throw new ArgumentException("O email é inválido: {email}.");
+            throw new ArgumentException($"O email é inválido: {email}.");
         }
         Email = emailTratado;
     }
