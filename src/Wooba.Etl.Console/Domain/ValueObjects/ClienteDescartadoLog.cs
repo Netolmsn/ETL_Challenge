@@ -1,4 +1,4 @@
-namespace Wooba.Etl.Domain.ValueObjects;
+namespace Wooba.Etl.Console.Domain.ValueObjects;
 
 public record ClienteDescartadoLog(
     int LinhaCsv, 

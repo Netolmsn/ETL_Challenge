@@ -1,4 +1,5 @@
 using Wooba.Etl.Console.Domain.Entities;
+using Wooba.Etl.Console.Domain.Interfaces;
 using Wooba.Etl.Console.Domain.ValueObjects;
 namespace Wooba.Etl.Console.Domain.Interfaces;
 public interface IClienteProcessor
