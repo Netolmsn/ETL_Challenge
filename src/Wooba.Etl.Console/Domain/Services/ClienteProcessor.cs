@@ -20,7 +20,7 @@ public class ClienteProcessor : IClienteProcessor
         var resultado = new ProcessamentoResultado();
         var emailsProcessados = new HashSet<String>(StringComparer.OrdinalIgnoreCase);
 
-        foreach (var linhaCrua in linhasCruas)
+        foreach (var linha in linhasCruas)
         {
             // Remover espacos 
             var nomeTratado = linha.Nome?.Trim();

@@ -3,6 +3,7 @@ using Wooba.Etl.Console.Domain.Interfaces;
 using Wooba.Etl.Console.Domain.Services;
 using Wooba.Etl.Console.Infrastructure.Csv;
 using Wooba.Etl.Console.Infrastructure.Database;
+using Wooba.Etl.Console.Domain.ValueObjects;
 
 var services = new ServiceCollection();
 
@@ -63,7 +64,7 @@ if (File.Exists(caminhoCsv))
     Console.WriteLine("Persistindo registros válidos no banco SQLite...");
     await repository.InserirMassaAsync(resultado.ClientesValidos);
 
-    var resumo = await repository.ObterResumoAsync(totalLidos, resultado.LogsDescarte.Count);
+    var resumo = await repository.ObterResumoExecucaoAsync(totalLidos, resultado.LogsDescarte.Count);
     Console.WriteLine("\n==================================================================");
     Console.WriteLine("                       RESUMO DA EXECUÇÃO                         ");
     Console.WriteLine("==================================================================");
@@ -117,7 +118,7 @@ while (rodando)
             Console.Write("\nDigite o ID do cliente que deseja marcar como revisado: ");
             if (int.TryParse(Console.ReadLine(), out int idUpdate))
             {
-                var atualizado = await repository.AtualizarStatusRevisadoAsync(idUpdate, true);
+                var atualizado = await repository.AtualizarStatusRevisadosAsync(idUpdate, true);
                 if (atualizado)
                     Console.WriteLine($"Cliente ID #{idUpdate} atualizado para 'Revisado' com sucesso!");
                 else

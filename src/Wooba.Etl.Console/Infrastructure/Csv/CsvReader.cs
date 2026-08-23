@@ -1,43 +1,41 @@
+using System.Runtime.CompilerServices;
 using Wooba.Etl.Console.Domain.Interfaces;
 using Wooba.Etl.Console.Domain.ValueObjects;
-using System.Runtime.CompilerServices;
+
 namespace Wooba.Etl.Console.Infrastructure.Csv;
 
 public class CsvReader : IClienteReader
 {
-    public async IAsyncEnumerable<RawClienteCsvDto> LerClientesAsync(string caminhoArquivo, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<RawClienteCsvDto> LerClientesAsync(
+        string caminhoArquivo, 
+        [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        if (!File.Exists(caminhoArquivo))
-        {
-            throw new FileNotFoundException($"Arquivo CSV não encontrado: {caminhoArquivo}");
-        }
-
         using var reader = new StreamReader(caminhoArquivo);
-        int numeroLinha = 0;
+        var numeroLinha = 0;
 
-        while (!reader.EndOfStream)
+        await reader.ReadLineAsync(cancellationToken); // Pula cabeçalho
+
+        string? linha;
+        while ((linha = await reader.ReadLineAsync(cancellationToken)) != null)
         {
-            var linha = await reader.ReadLineAsync(cancellationToken);
+            cancellationToken.ThrowIfCancellationRequested();
             numeroLinha++;
-
-            if (numeroLinha == 1 && (linha?.Contains("nome", StringComparison.OrdinalIgnoreCase) ?? false))
-            {
-                continue;
-            }
 
             if (string.IsNullOrWhiteSpace(linha)) continue;
 
-            var colunas = linha.Split(';');
-            if (colunas.Length < 3)
-            {
-                colunas = linhas.Split(',');
-            }
+            var colunas = linha.Split(',');
 
-            var nome = colunas.Length > 0 ? colunas [0] : string.Empty;
-            var email = colunas.Length > 1 ? colunas[1] : string.Empty;
-            var dataNascimento = colunas.Length > 2 ? colunas[2] : string.Empty;
+            if (colunas.Length < 3) continue;
 
-            yield return new RawClienteCsvDto(numeroLinha, nome, email, dataNascimento);
+        yield return new RawClienteCsvDto(
+            Linha: numeroLinha,
+            Nome: colunas[0].Trim(),
+            Email: colunas[1].Trim(),
+            DataNascimento: colunas[2].Trim(),
+            Telefone: colunas.Length > 3 ? colunas[3].Trim() : string.Empty,
+            Cidade: colunas.Length > 4 ? colunas[4].Trim() : string.Empty,
+            Uf: colunas.Length > 5 ? colunas[5].Trim() : string.Empty
+        );
         }
     }
 }

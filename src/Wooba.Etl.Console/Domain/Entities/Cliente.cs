@@ -8,7 +8,7 @@ public class Cliente
     public string Telefone { get; private set; } = string.Empty;
     public string Cidade { get; private set; } = string.Empty;
     public string Uf { get; private set; } = string.Empty;
-    public bool Revisando { get; private set; }
+    public bool Revisado { get; private set; }
 
     private Cliente() { }
 
@@ -20,13 +20,16 @@ public Cliente(string nome, string email, DateTime dataNascimento, string telefo
         Telefone = telefone?.Trim() ?? string.Empty;
         Cidade = cidade?.Trim() ?? string.Empty;
         Uf = uf?.Trim().ToUpperInvariant() ?? string.Empty;
-        Revisando = false;
+        Revisado = false;
     }
 
-    public void AtualizarCidade(string novaCidade, string novaUf)
+    public void AtualizarCidade(string novaCidade, string novaUf = "")
     {
-        if (!string.IsNullOrWhiteSpace(novaCidade)) Cidade = novaCidade.Trim();
-        if (!string.IsNullOrWhiteSpace(novaUf)) Uf = novaUf.Trim().ToUpperInvariant();
+        Cidade = novaCidade?.Trim() ?? string.Empty;
+        if (!string.IsNullOrWhiteSpace(novaUf))
+        {
+            Uf = novaUf.Trim().ToUpperInvariant();
+        }
     }
 
     public void SetNome(string nome)
@@ -49,9 +52,9 @@ public Cliente(string nome, string email, DateTime dataNascimento, string telefo
         Email = emailTratado;
     }
 
-    public void MarcarComoRevisando()
+    public void MarcarComoRevisado()
     {
-        Revisando = true;
+        Revisado = true;
     }
 
     private static bool ValidarEmail(string email)

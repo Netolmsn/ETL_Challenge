@@ -90,16 +90,16 @@ public class ClienteRepository : IClienteRepository
         return clientes;
     }
 
-    public async Task<bool> AtualizarStatusRevisadoAsync(int id, bool revisado)
-    {
-        using var command = _dbContext.Connection.CreateCommand();
-        command.CommandText = "UPDATE Clientes SET Revisado = @revisado WHERE Id = @id;";
-        command.Parameters.Add(new SqliteParameter("@revisado", revisado ? 1 : 0));
-        command.Parameters.Add(new SqliteParameter("@id", id));
+    public async Task<bool> AtualizarStatusRevisadosAsync(int id, bool revisado)
+{
+    using var command = _dbContext.Connection.CreateCommand();
+    command.CommandText = "UPDATE Clientes SET Revisado = @revisado WHERE Id = @id;";
+    command.Parameters.Add(new SqliteParameter("@revisado", revisado ? 1 : 0));
+    command.Parameters.Add(new SqliteParameter("@id", id));
 
-        var linhasAfetadas = await ((SqliteCommand)command).ExecuteNonQueryAsync();
-        return linhasAfetadas > 0;
-    }
+    var linhasAfetadas = await ((SqliteCommand)command).ExecuteNonQueryAsync();
+    return linhasAfetadas > 0;
+}
 
     public async Task<bool> ExcluirPorIdAsync(int id)
     {
@@ -111,13 +111,13 @@ public class ClienteRepository : IClienteRepository
         return linhasAfetadas > 0;
     }
 
-    public async Task<ResumoExecucaoVo> ObterResumoAsync(int totalLidos, int totalDescartados)
+    public async Task<Wooba.Etl.Console.Domain.ValueObjects.ResumoExecucaoVo> ObterResumoExecucaoAsync(int totalLidos, int totalDescartados)
     {
         using var command = _dbContext.Connection.CreateCommand();
         command.CommandText = "SELECT COUNT(*) FROM Clientes;";
 
         var totalInserido = Convert.ToInt32(await ((SqliteCommand)command).ExecuteScalarAsync());
 
-        return new ResumoExecucaoVo(totalLidos, totalInserido, totalDescartados);
+        return new Wooba.Etl.Console.Domain.ValueObjects.ResumoExecucaoVo(totalLidos, totalInserido, totalDescartados);
     }
 }
