@@ -1,4 +1,4 @@
-namespace Wooba.Etl.Domain.Entities;
+namespace Wooba.Etl.Console.Domain.Entities;
 public class Cliente
 {
     public int Id { get; private set; }
@@ -9,7 +9,7 @@ public class Cliente
 
     private Cliente() { }
 
-    public Cliente(int id = 0, string nome, string email, DateTime dataNascimento)
+    public Cliente(string email, DateTime dataNascimento, string nome = "", int id = 0)
     {
         Id = id;
         SetNome(nome);
