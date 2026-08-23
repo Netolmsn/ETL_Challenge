@@ -1,6 +1,6 @@
-using System.Runtime.CompilerServices;
 using Wooba.Etl.Console.Domain.Interfaces;
 using Wooba.Etl.Console.Domain.ValueObjects;
+using System.Runtime.CompilerServices;
 namespace Wooba.Etl.Console.Infrastructure.Csv;
 
 public class CsvReader : IClienteReader

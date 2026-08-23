@@ -1,5 +1,4 @@
 using System.Globalization;
-using Wooba.Etl.Console.Domain.Dtos;
 using Wooba.Etl.Console.Domain.Entities;
 using Wooba.Etl.Console.Domain.Interfaces;
 using Wooba.Etl.Console.Domain.ValueObjects;
