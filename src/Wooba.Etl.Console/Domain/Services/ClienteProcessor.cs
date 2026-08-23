@@ -2,6 +2,7 @@ using System.Globalization;
 using Wooba.Etl.Console.Domain.Entities;
 using Wooba.Etl.Console.Domain.Interfaces;
 using Wooba.Etl.Console.Domain.ValueObjects;
+
 namespace Wooba.Etl.Console.Domain.Services;
 
 public class ClienteProcessor : IClienteProcessor
@@ -18,37 +19,40 @@ public class ClienteProcessor : IClienteProcessor
     public ProcessamentoResultado ProcessarLinhas(IEnumerable<RawClienteCsvDto> linhasCruas)
     {
         var resultado = new ProcessamentoResultado();
-        var emailsProcessados = new HashSet<String>(StringComparer.OrdinalIgnoreCase);
+        var emailsProcessados = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         foreach (var linha in linhasCruas)
         {
-            // Remover espacos 
+            // Remover espaços 
             var nomeTratado = linha.Nome?.Trim();
             var emailTratado = linha.Email?.Trim();
             var dataTratada = linha.DataNascimento?.Trim();
+            var telefoneTratado = linha.Telefone?.Trim() ?? string.Empty;
+            var cidadeTratada = linha.Cidade?.Trim() ?? string.Empty;
+            var ufTratada = linha.Uf?.Trim() ?? string.Empty;
 
-            //Descartas linhas com nome vazio
+            // 1. Descartar linhas com nome vazio
             if (string.IsNullOrWhiteSpace(nomeTratado))
             {
                 resultado.LogsDescarte.Add(new ClienteDescartadoLog(linha.Linha, $"{linha.Nome};{linha.Email}", "Nome do cliente está vazio."));
                 continue;
             }
 
-            //Descartas emails inválidos
+            // 2. Descartar e-mails inválidos
             if (string.IsNullOrWhiteSpace(emailTratado) || !ValidarFormatoEmail(emailTratado))
             {
                 resultado.LogsDescarte.Add(new ClienteDescartadoLog(linha.Linha, $"{linha.Nome};{linha.Email}", $"E-mail em formato inválido: '{emailTratado}'."));
                 continue;
             }
 
-            //Não gravar o cliente duas vezes
+            // 3. Não gravar o cliente duas vezes
             if (emailsProcessados.Contains(emailTratado))
             {
                 resultado.LogsDescarte.Add(new ClienteDescartadoLog(linha.Linha, $"{linha.Nome};{linha.Email}", $"Cliente duplicado por e-mail: '{emailTratado}'."));
                 continue;
             }
 
-            //Aceitar diferentes formatos de data
+            // 4. Aceitar diferentes formatos de data
             if (!DateTime.TryParseExact(dataTratada, FormatosDataSuportados, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dataNascimento) &&
                 !DateTime.TryParse(dataTratada, out dataNascimento))
             {
@@ -56,9 +60,18 @@ public class ClienteProcessor : IClienteProcessor
                 continue;
             }
 
+            // 5. Instancia o cliente após TODAS as validações passarem
             try
             {
-                var cliente = new Cliente(nomeTratado, emailTratado, dataNascimento);
+                var cliente = new Cliente(
+                    nome: nomeTratado, 
+                    email: emailTratado, 
+                    dataNascimento: dataNascimento, 
+                    telefone: telefoneTratado, 
+                    cidade: cidadeTratada, 
+                    uf: ufTratada
+                );
+
                 resultado.ClientesValidos.Add(cliente);
                 emailsProcessados.Add(emailTratado);
             }
@@ -69,8 +82,8 @@ public class ClienteProcessor : IClienteProcessor
         }
 
         return resultado;
-
     }
+
     private static bool ValidarFormatoEmail(string email)
     {
         if (string.IsNullOrWhiteSpace(email) || email.Contains(' ')) 
