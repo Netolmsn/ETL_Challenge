@@ -1,10 +1,8 @@
-namespace Wooba.Etl.Console.Domain.Services;
-
 using System.Globalization;
 using Wooba.Etl.Console.Domain.Entities;
 using Wooba.Etl.Console.Domain.Interfaces;
 using Wooba.Etl.Console.Domain.ValueObjects;
-using Wooba.Etl.Domain.Interfaces;
+namespace Wooba.Etl.Console.Domain.Services;
 
 public class ClienteProcessor : IClienteProcessor
 {

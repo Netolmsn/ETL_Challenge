@@ -1,12 +1,13 @@
-namespace Wooba.Etl.Console.Infrastructure.Csv;
-
 using System.Globalization;
 using System.IO;
-using Wooba.Etl.Domain.Interfaces;
+using Wooba.Etl.Console.Domain.Interfaces;
+using System.Runtime.CompilerServices;
+namespace Wooba.Etl.Console.Infrastructure.Csv;
+
 
 public class CsvReader : IClienteReader
 {
-    public async IAsyncEnumerable<RawClienteCsvDto> LerClientesAsync(string caminhoArquivo, CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<RawClienteCsvDto> LerClientesAsync(string caminhoArquivo, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         if (!File.Exists(caminhoArquivo))
         {

@@ -1,6 +1,6 @@
-namespace Wooba.Etl.Domain.Interfaces;
+namespace Wooba.Etl.Console.Domain.Interfaces;
 
-using Wooba.Etl.Domain.Entities;
+using Wooba.Etl.Console.Domain.Entities;
 
 public interface IClienteRepository
 {

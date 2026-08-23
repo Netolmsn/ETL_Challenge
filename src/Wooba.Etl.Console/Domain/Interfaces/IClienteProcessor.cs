@@ -1,8 +1,6 @@
-namespace Wooba.Etl.Domain.Interfaces;
-
-using Wooba.Etl.Domain.Entities;
-using Wooba.Etl.Domain.ValueObjects;
-
+using Wooba.Etl.Console.Domain.Entities;
+using Wooba.Etl.Console.Domain.ValueObjects;
+namespace Wooba.Etl.Console.Domain.Interfaces;
 public interface IClienteProcessor
 {
     ProcessamentoResultado ProcessarLinhas(IEnumerable<RawClienteCsvDto> linhasCruas);
