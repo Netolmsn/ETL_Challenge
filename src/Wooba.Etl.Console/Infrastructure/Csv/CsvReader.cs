@@ -6,7 +6,7 @@ using Wooba.Etl.Domain.Interfaces;
 
 public class CsvReader : IClienteReader
 {
-    public IAsyncEnumerable<RawClienteCsvDto> LerClientesAsync(string caminhoArquivo, CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<RawClienteCsvDto> LerClientesAsync(string caminhoArquivo, CancellationToken cancellationToken = default)
     {
         if (!File.Exists(caminhoArquivo))
         {
@@ -21,12 +21,12 @@ public class CsvReader : IClienteReader
             var linha = await reader.ReadLineAsync(cancellationToken);
             numeroLinha++;
 
-            if (numeroLinha == 1 && (Linha?.Contains("nome", StringComparison.OrdinalIgnoreCase) ?? false))
+            if (numeroLinha == 1 && (linha?.Contains("nome", StringComparison.OrdinalIgnoreCase) ?? false))
             {
                 continue;
             }
 
-            if (string.IsNullOrWhiteSpace(Linha)) continue;
+            if (string.IsNullOrWhiteSpace(linha)) continue;
 
             var colunas = linha.Split(';');
             if (colunas.Length < 3)

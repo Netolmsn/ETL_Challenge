@@ -32,7 +32,7 @@ public class ClienteProcessor : IClienteProcessor
             //Descartas linhas com nome vazio
             if (string.IsNullOrWhiteSpace(nomeTratado))
             {
-                resultado.LogsDescarte.Add(new ClienteDescartadoLog(linha.Linha, $"{linha.Nome};{linha.Email}, "Nome do cliente está vazio.""));
+                resultado.LogsDescarte.Add(new ClienteDescartadoLog(linha.Linha, $"{linha.Nome};{linha.Email}", "Nome do cliente está vazio."));
                 continue;
             }
 
