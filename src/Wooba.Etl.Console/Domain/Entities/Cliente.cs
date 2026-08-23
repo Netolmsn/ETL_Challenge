@@ -5,17 +5,28 @@ public class Cliente
     public string Nome { get; private set; } = string.Empty;
     public string Email { get; private set; } = string.Empty;
     public DateTime DataNascimento { get; private set; }
+    public string Telefone { get; private set; } = string.Empty;
+    public string Cidade { get; private set; } = string.Empty;
+    public string Uf { get; private set; } = string.Empty;
     public bool Revisando { get; private set; }
 
     private Cliente() { }
 
-    public Cliente(string email, DateTime dataNascimento, string nome = "", int id = 0)
-    {
+public Cliente(string nome, string email, DateTime dataNascimento, string telefone = "", string cidade = "", string uf = "", int id = 0)    {
         Id = id;
         SetNome(nome);
         SetEmail(email);
         DataNascimento = dataNascimento;
+        Telefone = telefone?.Trim() ?? string.Empty;
+        Cidade = cidade?.Trim() ?? string.Empty;
+        Uf = uf?.Trim().ToUpperInvariant() ?? string.Empty;
         Revisando = false;
+    }
+
+    public void AtualizarCidade(string novaCidade, string novaUf)
+    {
+        if (!string.IsNullOrWhiteSpace(novaCidade)) Cidade = novaCidade.Trim();
+        if (!string.IsNullOrWhiteSpace(novaUf)) Uf = novaUf.Trim().ToUpperInvariant();
     }
 
     public void SetNome(string nome)

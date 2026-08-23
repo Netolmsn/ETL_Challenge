@@ -73,6 +73,9 @@ public class ClienteProcessor : IClienteProcessor
     }
     private static bool ValidarFormatoEmail(string email)
     {
+        if (string.IsNullOrWhiteSpace(email) || email.Contains(' ')) 
+            return false;
+
         var partes = email.Split('@');
         return partes.Length == 2 && !string.IsNullOrWhiteSpace(partes[0]) && !string.IsNullOrWhiteSpace(partes[1]);
     }
