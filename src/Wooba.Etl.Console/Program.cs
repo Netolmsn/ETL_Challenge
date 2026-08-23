@@ -95,9 +95,9 @@ while (rodando)
     {
         case "1":
             var clientes = await repository.ObterTodosAsync();
-            Console.WriteLine("\n------------------------------------------------------------------------------------");
-            Console.WriteLine("ID | Nome                       | E-mail                        | Data Nasc. | Revisado | Cidade/UF");
-            Console.WriteLine("------------------------------------------------------------------------------------");
+            Console.WriteLine("---------------------------------------------------------------------------------------------------------");
+            Console.WriteLine("ID | Nome                | E-mail                        | Telefone       | Data Nasc. | Revisado | Cidade/UF");
+            Console.WriteLine("---------------------------------------------------------------------------------------------------------");
             
             if (!clientes.Any())
             {
@@ -105,10 +105,10 @@ while (rodando)
             }
             else
             {
-                foreach (var c in clientes)
+                foreach (var cliente in clientes)
                 {
-                    var status = c.Revisado ? "SIM" : "NÃO";
-                    Console.WriteLine($"{c.Id,-2} | {c.Nome,-26} | {c.Email,-29} | {c.DataNascimento:dd/MM/yyyy} | {status,-8} | {c.Cidade}/{c.Uf}");
+                    var statusRevisado = cliente.Revisado ? "SIM" : "NÃO";
+                    Console.WriteLine($"{cliente.Id,-2} | {cliente.Nome,-19} | {cliente.Email,-29} | {cliente.Telefone,-14} | {cliente.DataNascimento:dd/MM/yyyy} | {statusRevisado,-8} | {cliente.Cidade}/{cliente.Uf}");
                 }
             }
             Console.WriteLine("------------------------------------------------------------------------------------");
