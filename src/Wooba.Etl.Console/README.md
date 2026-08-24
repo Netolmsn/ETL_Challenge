@@ -20,13 +20,13 @@ Ferramenta desenvolvida em **.NET 10** para leitura, sanitização, log de desca
 
 1. **Leitura de CSV:** Streaming assíncrono do arquivo de entrada[cite: 1].
 2. **Tratamento & Sanitização:**
-   - Remoção de espaços extras (*Trim*)[cite: 1].
-   - Padronização de datas multi-formato (`dd/MM/yyyy`, `yyyy-MM-dd`, etc.)[cite: 1].
-   - Descarte de nomes vazios ou e-mails em formatos inválidos (sem `@`, `@` duplo ou espaços internos)[cite: 1].
-   - Deduplicação por e-mail (*case-insensitive*)[cite: 1].
-   - Registro detalhado de logs de linhas descartadas com motivo[cite: 1].
-3. **Persistência SQLite Persistente:** Conexão aberta durante todo o ciclo de vida da aplicação para manter os dados em RAM[cite: 1].
-4. **4 Operações SQL:** Inserção em lote, consulta com resumo, atualização e exclusão por ID[cite: 1].
+   - Remoção de espaços extras (*Trim*).
+   - Padronização de datas multi-formato (`dd/MM/yyyy`, `yyyy-MM-dd`, etc.).
+   - Descarte de nomes vazios ou e-mails em formatos inválidos (sem `@`, `@` duplo ou espaços internos).
+   - Deduplicação por e-mail (*case-insensitive*).
+   - Registro detalhado de logs de linhas descartadas com motivo.
+3. **Persistência SQLite Persistente:** Conexão aberta durante todo o ciclo de vida da aplicação para manter os dados em RAM.
+4. **4 Operações SQL:** Inserção em lote, consulta com resumo, atualização e exclusão por ID .
 
 ---
 
@@ -59,4 +59,4 @@ Em seguida, exibirá o Resumo da Execução e abrirá um menu interativo:
 
 3. Excluir cliente (DELETE): Digite o ID do cliente para removê-lo da base.
 
-0. Sair: Encerra a aplicação e libera a conexão do SQLite em memória.
+0. Sair: Encerra a aplicação e libera a conexão do SQLite em memória.  
