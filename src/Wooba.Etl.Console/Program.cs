@@ -52,7 +52,7 @@ if (File.Exists(caminhoCsv))
     if (resultado.LogsDescarte.Any())
     {
         Console.WriteLine("\n------------------------------------------------------------------");
-        Console.WriteLine("REGISTRO DE INCIDENTES / DESCHARTES DE LINHAS (LOG)");
+        Console.WriteLine("REGISTRO DE INCIDENTES / DESCARTES DE LINHAS (LOG)");
         Console.WriteLine("------------------------------------------------------------------");
         foreach (var log in resultado.LogsDescarte)
         {
